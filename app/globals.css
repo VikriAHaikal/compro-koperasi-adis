@@ -1,0 +1,6 @@
+/* Disables CSS validation warning for Tailwind v4 specific rules */
+/* @source is a valid Tailwind v4 directive */
+
+@import "tailwindcss";
+
+@source "../components";
