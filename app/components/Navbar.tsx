@@ -1,289 +1,365 @@
-"use client"; // Wajib karena kita pakai State (useState)
+"use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  Info,
+  Newspaper,
+  ShoppingBag,
+  Banknote,
+  GraduationCap,
+} from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav className="bg-blue-600 text-white shadow-md sticky top-0 z-[100]">
-      <div className="flex items-center justify-between px-6 md:px-10 py-5 max-w-7xl mx-auto">
+    <nav
+      className={`fixed top-0 w-full z-[100] transition-all duration-500 ${
+        scrolled
+          ? "bg-slate-950/95 backdrop-blur-sm py-3 shadow-2xl"
+          : "bg-slate-950 py-5"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between">
         {/* 1. LOGO & IDENTITAS */}
         <Link
           href="/"
-          className="flex items-center gap-4 hover:opacity-90 transition shrink-0"
+          className="flex items-center gap-3 shrink-0 hover:opacity-80 transition-opacity"
         >
-          <div className="relative w-[40px] h-[40px] md:w-[45px] md:h-[45px] bg-white rounded-full flex items-center justify-center p-1 shadow-md">
+          <div className="relative w-10 h-10 md:w-12 md:h-12 flex items-center justify-center p-0">
             <Image
               src="/kopkar_adis.png"
               alt="Logo"
-              width={35}
-              height={35}
+              width={48}
+              height={48}
               className="object-contain"
             />
           </div>
-          <div className="flex flex-col leading-tight text-left">
-            <span className="text-[10px] md:text-base font-extrabold uppercase tracking-wide">
-              Koperasi Konsumen Karyawan
+          <div className="flex flex-col leading-none text-left">
+            <span className="text-sm md:text-base font-extrabold uppercase tracking-tighter text-white">
+              Koperasi Karyawan
             </span>
-            <span className="text-[8px] md:text-xs font-semibold text-blue-100 uppercase tracking-tighter md:tracking-normal">
+            <span className="text-[9px] md:text-[11px] font-bold text-slate-300 uppercase tracking-[0.2em]">
               PT Adis Dimension Footwear
             </span>
           </div>
         </Link>
 
-        {/* 2. HAMBURGER BUTTON (Hanya Muncul di Mobile) */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="lg:hidden p-2 focus:outline-none hover:bg-blue-700 rounded-lg transition-colors"
-        >
-          {isOpen ? (
-            <span className="text-2xl">✕</span> // Icon Close
-          ) : (
-            <span className="text-2xl">☰</span> // Icon Menu
-          )}
-        </button>
-
-        {/* 3. MENU DESKTOP (Sembunyi di Mobile) */}
-        <ul className="hidden lg:flex gap-6 xl:gap-8 text-[11px] xl:text-sm font-semibold items-center uppercase tracking-wider">
+        {/* 2. DESKTOP MENU */}
+        <ul className="hidden lg:flex items-center gap-8 text-[11px] font-black uppercase tracking-[0.2em]">
           <li>
-            <Link href="/" className="hover:text-blue-200 transition">
-              HOME
+            <Link
+              href="/"
+              className="text-slate-300 hover:text-blue-400 transition-colors"
+            >
+              Home
             </Link>
           </li>
 
-          {/* PROFILE DROPDOWN */}
-          <li className="relative group py-2">
-            <button className="hover:text-blue-200 transition flex items-center gap-1">
-              PROFILE <span className="text-[10px]">▼</span>
+          <li className="relative group">
+            <button className="flex items-center gap-1.5 text-slate-300 group-hover:text-blue-400 transition-colors">
+              Profile{" "}
+              <ChevronDown className="w-3 h-3 transition-transform group-hover:rotate-180" />
             </button>
-            <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300 z-50">
-              <ul className="bg-white text-gray-800 w-52 shadow-2xl rounded-xl border-t-4 border-blue-500 py-2">
-                <li>
-                  <Link
-                    href="/profile/visi-misi"
-                    className="block px-6 py-2.5 hover:bg-blue-50 hover:text-blue-600"
-                  >
-                    Visi & Misi
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/profile/sejarah"
-                    className="block px-6 py-2.5 hover:bg-blue-50 hover:text-blue-600 border-t border-gray-50"
-                  >
-                    Sejarah
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/profile/struktur-organisasi"
-                    className="block px-6 py-2.5 hover:bg-blue-50 hover:text-blue-600 border-t border-gray-50"
-                  >
-                    Struktur Organisasi
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/profile/legalitas"
-                    className="block px-6 py-2.5 hover:bg-blue-50 hover:text-blue-600 border-t border-gray-50"
-                  >
-                    Legalitas
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/profile/prestasi"
-                    className="block px-6 py-2.5 hover:bg-blue-50 hover:text-blue-600 border-t border-gray-50"
-                  >
-                    Prestasi
-                  </Link>
-                </li>
+            <div className="absolute left-0 top-full pt-4 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300">
+              <ul className="w-56 bg-slate-900 border border-slate-800 rounded-2xl p-2 shadow-2xl backdrop-blur-xl">
+                {[
+                  "Visi Misi",
+                  "Sejarah",
+                  "Struktur Organisasi",
+                  "Legalitas",
+                  "Prestasi",
+                ].map((item) => (
+                  <li key={item}>
+                    <Link
+                      href={`/profile/${item.toLowerCase().replace(/ /g, "-")}`}
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl text-[10px] font-bold uppercase text-slate-400 hover:bg-blue-600 hover:text-white transition-all"
+                    >
+                      <Info className="w-4 h-4 opacity-50" /> {item}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </li>
 
-          {/* LAYANAN DROPDOWN */}
-          <li className="relative group py-2">
-            <button className="hover:text-blue-200 transition flex items-center gap-1">
-              LAYANAN <span className="text-[10px]">▼</span>
+          {/* LAYANAN MEGA MENU (KATEGORI SEKARANG BISA DIKLIK) */}
+          <li className="relative group">
+            <button className="flex items-center gap-1.5 text-slate-300 group-hover:text-blue-400 transition-colors">
+              Layanan{" "}
+              <ChevronDown className="w-3 h-3 transition-transform group-hover:rotate-180" />
             </button>
-            <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300 z-50">
-              <ul className="bg-white text-gray-800 w-80 shadow-2xl rounded-2xl border-t-4 border-blue-500 overflow-hidden">
-                <li className="bg-gray-50 px-6 py-3 border-b">
-                  <Link
-                    href="/layanan/unit-ritel"
-                    className="text-blue-600 font-black text-[10px] tracking-widest uppercase"
-                  >
-                    Unit Ritel
+            <div className="absolute left-1/2 -translate-x-1/2 top-full pt-4 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300">
+              <div className="w-[680px] bg-slate-900 border border-slate-800 rounded-[2.5rem] p-8 shadow-2xl grid grid-cols-3 gap-8 backdrop-blur-xl">
+                {/* Unit Ritel (Clickable Header) */}
+                <div className="space-y-4">
+                  <Link href="/layanan/unit-ritel" className="block group/head">
+                    <h4 className="text-blue-500 font-black text-[9px] tracking-widest uppercase border-b border-slate-800 pb-2 flex items-center gap-2 group-hover/head:text-white transition-colors">
+                      <ShoppingBag className="w-3 h-3" /> Unit Ritel
+                    </h4>
                   </Link>
-                </li>
-                <li className="bg-white pb-2">
-                  <Link
-                    href="/layanan/unit-ritel/adis-mart"
-                    className="flex items-center gap-3 px-8 py-2.5 hover:bg-blue-50 hover:text-blue-600 text-sm font-medium"
-                  >
-                    🛒 Adis Mart
-                  </Link>
-                  <Link
-                    href="/layanan/unit-ritel/bazar"
-                    className="flex items-center gap-3 px-8 py-2.5 hover:bg-blue-50 hover:text-blue-600 text-sm font-medium"
-                  >
-                    🎁 Bazar Tahunan
-                  </Link>
-                </li>
-                <li className="bg-gray-50 px-6 py-3 border-b border-t">
+                  <div className="flex flex-col gap-3">
+                    <Link
+                      href="/layanan/unit-ritel/adis-mart"
+                      className="text-[10px] font-bold text-slate-300 hover:text-white transition-colors"
+                    >
+                      Adis Mart
+                    </Link>
+                    <Link
+                      href="/layanan/unit-ritel/bazar"
+                      className="text-[10px] font-bold text-slate-300 hover:text-white transition-colors"
+                    >
+                      Bazar Tahunan
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Simpan Pinjam (Clickable Header) */}
+                <div className="space-y-4 border-x border-slate-800 px-6">
                   <Link
                     href="/layanan/simpan-pinjam"
-                    className="text-blue-600 font-black text-[10px] tracking-widest uppercase"
+                    className="block group/head"
                   >
-                    Simpan Pinjam
+                    <h4 className="text-emerald-400 font-black text-[9px] tracking-widest uppercase border-b border-slate-800 pb-2 flex items-center gap-2 group-hover/head:text-white transition-colors">
+                      <Banknote className="w-3 h-3" /> Simpan Pinjam
+                    </h4>
                   </Link>
-                </li>
-                <li className="bg-white pb-2">
-                  <Link
-                    href="/layanan/simpan-pinjam/dana-talangan"
-                    className="flex items-center gap-3 px-8 py-2.5 hover:bg-blue-50 hover:text-blue-600 text-[13px] font-medium"
-                  >
-                    💸 Dana Talangan
-                  </Link>
-                  <Link
-                    href="/layanan/simpan-pinjam/pinjaman-regular"
-                    className="flex items-center gap-3 px-8 py-2.5 hover:bg-blue-50 hover:text-blue-600 text-[13px] font-medium"
-                  >
-                    🏦 Pinjaman Regular
-                  </Link>
-                  <Link
-                    href="/layanan/simpan-pinjam/pinjaman-multi-guna"
-                    className="flex items-center gap-3 px-8 py-2.5 hover:bg-blue-50 hover:text-blue-600 text-[13px] font-medium"
-                  >
-                    💎 Pinjaman Multiguna
-                  </Link>
-                </li>
-                <li className="bg-gray-50 px-6 py-3 border-b border-t">
+                  <div className="flex flex-col gap-3">
+                    <Link
+                      href="/layanan/simpan-pinjam/dana-talangan"
+                      className="text-[10px] font-bold text-slate-300 hover:text-white transition-colors"
+                    >
+                      Dana Talangan
+                    </Link>
+                    <Link
+                      href="/layanan/simpan-pinjam/pinjaman-regular"
+                      className="text-[10px] font-bold text-slate-300 hover:text-white transition-colors"
+                    >
+                      Pinjaman Regular
+                    </Link>
+                    <Link
+                      href="/layanan/simpan-pinjam/pinjaman-multi-guna"
+                      className="text-[10px] font-bold text-slate-300 hover:text-white transition-colors"
+                    >
+                      Pinjaman Multi-Guna
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Pelatihan (Clickable Header) */}
+                <div className="space-y-4">
                   <Link
                     href="/layanan/pelatihan-koperasi"
-                    className="text-blue-600 font-black text-[10px] tracking-widest uppercase"
+                    className="block group/head"
                   >
-                    Pelatihan
+                    <h4 className="text-indigo-400 font-black text-[9px] tracking-widest uppercase border-b border-slate-800 pb-2 flex items-center gap-2 group-hover/head:text-white transition-colors">
+                      <GraduationCap className="w-3 h-3" /> Pelatihan
+                    </h4>
                   </Link>
-                </li>
-                <li className="bg-white">
-                  <Link
-                    href="/layanan/pelatihan-koperasi/pendidikan-keterampilan"
-                    className="flex items-center gap-3 px-8 py-2.5 hover:bg-blue-50 hover:text-blue-600 text-[13px] font-medium"
-                  >
-                    🛠️ Pendidikan Keterampilan
-                  </Link>
-                  <Link
-                    href="/layanan/pelatihan-koperasi/pendidikan-dasar-anggota"
-                    className="flex items-center gap-3 px-8 py-2.5 hover:bg-blue-50 hover:text-blue-600 text-[13px] font-medium"
-                  >
-                    📜 Pendidikan Dasar Anggota
-                  </Link>
-                </li>
-              </ul>
+                  <div className="flex flex-col gap-3">
+                    <Link
+                      href="/layanan/pelatihan-koperasi/pendidikan-dasar-anggota"
+                      className="text-[10px] font-bold text-slate-300 hover:text-white transition-colors"
+                    >
+                      Dasar Anggota
+                    </Link>
+                    <Link
+                      href="/layanan/pelatihan-koperasi/pendidikan-keterampilan"
+                      className="text-[10px] font-bold text-slate-300 hover:text-white transition-colors"
+                    >
+                      Keterampilan
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
           </li>
 
           <li>
-            <Link href="/berita" className="hover:text-blue-200 transition">
-              BERITA
+            <Link
+              href="/berita"
+              className="text-slate-300 hover:text-blue-400 transition-colors"
+            >
+              Berita
             </Link>
           </li>
           <li>
-            <Link href="/kontak" className="hover:text-blue-200 transition">
-              KONTAK
+            <Link
+              href="/kontak"
+              className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-full transition-all shadow-lg shadow-blue-600/20"
+            >
+              Kontak
             </Link>
           </li>
         </ul>
+
+        {/* 3. MOBILE BUTTON */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="lg:hidden text-white focus:outline-none"
+        >
+          {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+        </button>
       </div>
 
-      {/* 4. MOBILE MENU (Hanya Muncul saat isOpen = true) */}
-      {isOpen && (
-        <div className="lg:hidden bg-blue-700 border-t border-blue-500 overflow-y-auto max-h-[90vh]">
-          <ul className="flex flex-col font-bold text-sm tracking-widest uppercase italic p-6 gap-6">
-            <li>
-              <Link href="/" onClick={() => setIsOpen(false)}>
-                HOME
+      {/* 4. MOBILE DRAWER (NO ITALIC & CLICKABLE HEADERS) */}
+      <div
+        className={`fixed inset-0 bg-slate-950 z-[99] transition-transform duration-500 lg:hidden ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="p-10 pt-32 flex flex-col gap-10 h-full overflow-y-auto">
+          <Link
+            href="/"
+            onClick={() => setIsOpen(false)}
+            className="text-4xl font-black text-white uppercase tracking-tighter"
+          >
+            Home
+          </Link>
+
+          <div className="space-y-4">
+            <span className="text-blue-500 text-[10px] font-black uppercase tracking-[0.3em]">
+              -- Profile
+            </span>
+            <div className="flex flex-col gap-4 pl-4 border-l border-slate-800 text-slate-300 font-bold text-lg">
+              <Link href="/profile/visi-misi" onClick={() => setIsOpen(false)}>
+                Visi & Misi
               </Link>
-            </li>
+              <Link href="/profile/sejarah" onClick={() => setIsOpen(false)}>
+                Sejarah
+              </Link>
+              <Link
+                href="/profile/struktur-organisasi"
+                onClick={() => setIsOpen(false)}
+              >
+                Struktur Organisasi
+              </Link>
+              <Link href="/profile/legalitas" onClick={() => setIsOpen(false)}>
+                Legalitas
+              </Link>
+              <Link href="/profile/prestasi" onClick={() => setIsOpen(false)}>
+                Prestasi
+              </Link>
+            </div>
+          </div>
 
-            {/* Mobile Profile Section */}
-            <li className="space-y-4">
-              <span className="text-blue-300 text-[10px] font-black italic">
-                -- PROFILE
-              </span>
-              <div className="flex flex-col gap-3 pl-4 normal-case tracking-normal not-italic font-medium text-blue-50">
-                <Link
-                  href="/profile/visi-misi"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Visi & Misi
-                </Link>
-                <Link href="/profile/sejarah" onClick={() => setIsOpen(false)}>
-                  Sejarah
-                </Link>
-                <Link
-                  href="/profile/struktur-organisasi"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Struktur Organisasi
-                </Link>
-                <Link
-                  href="/profile/legalitas"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Legalitas
-                </Link>
-                <Link href="/profile/prestasi" onClick={() => setIsOpen(false)}>
-                  Prestasi
-                </Link>
-              </div>
-            </li>
+          <div className="space-y-6">
+            <span className="text-emerald-400 text-[10px] font-black uppercase tracking-[0.3em]">
+              -- Layanan Kami
+            </span>
 
-            {/* Mobile Layanan Section */}
-            <li className="space-y-4">
-              <span className="text-blue-300 text-[10px] font-black italic">
-                -- LAYANAN
-              </span>
-              <div className="flex flex-col gap-3 pl-4 normal-case tracking-normal not-italic font-medium text-blue-50">
+            <div className="flex flex-col gap-8 pl-4 border-l border-slate-800">
+              {/* Unit Ritel (Clickable Head) */}
+              <div className="space-y-3">
                 <Link
                   href="/layanan/unit-ritel"
-                  className="font-bold text-white"
+                  onClick={() => setIsOpen(false)}
+                  className="text-[10px] text-slate-500 uppercase font-black tracking-widest hover:text-blue-400 block"
                 >
                   Unit Ritel
                 </Link>
+                <div className="flex flex-col gap-3 text-slate-200 font-bold">
+                  <Link
+                    href="/layanan/unit-ritel/adis-mart"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Adis Mart
+                  </Link>
+                  <Link
+                    href="/layanan/unit-ritel/bazar"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Bazar Tahunan
+                  </Link>
+                </div>
+              </div>
+              {/* Simpan Pinjam (Clickable Head) */}
+              <div className="space-y-3">
                 <Link
                   href="/layanan/simpan-pinjam"
-                  className="font-bold text-white"
+                  onClick={() => setIsOpen(false)}
+                  className="text-[10px] text-slate-500 uppercase font-black tracking-widest hover:text-blue-400 block"
                 >
                   Simpan Pinjam
                 </Link>
+                <div className="flex flex-col gap-3 text-slate-200 font-bold">
+                  <Link
+                    href="/layanan/simpan-pinjam/dana-talangan"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Dana Talangan
+                  </Link>
+                  <Link
+                    href="/layanan/simpan-pinjam/pinjaman-regular"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Pinjaman Regular
+                  </Link>
+                  <Link
+                    href="/layanan/simpan-pinjam/pinjaman-multi-guna"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Pinjaman Multi-Guna
+                  </Link>
+                </div>
+              </div>
+              {/* Pelatihan (Clickable Head) */}
+              <div className="space-y-3">
                 <Link
                   href="/layanan/pelatihan-koperasi"
-                  className="font-bold text-white"
+                  onClick={() => setIsOpen(false)}
+                  className="text-[10px] text-slate-500 uppercase font-black tracking-widest hover:text-blue-400 block"
                 >
                   Pelatihan
                 </Link>
+                <div className="flex flex-col gap-3 text-slate-200 font-bold">
+                  <Link
+                    href="/layanan/pelatihan-koperasi/pendidikan-dasar-anggota"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Dasar Anggota
+                  </Link>
+                  <Link
+                    href="/layanan/pelatihan-koperasi/pendidikan-keterampilan"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Keterampilan
+                  </Link>
+                </div>
               </div>
-            </li>
+            </div>
+          </div>
 
-            <li>
-              <Link href="/berita" onClick={() => setIsOpen(false)}>
-                BERITA
-              </Link>
-            </li>
-            <li>
-              <Link href="/kontak" onClick={() => setIsOpen(false)}>
-                KONTAK
-              </Link>
-            </li>
-          </ul>
+          <div className="flex flex-col gap-6 pt-6 border-t border-slate-900">
+            <Link
+              href="/berita"
+              onClick={() => setIsOpen(false)}
+              className="text-3xl font-black text-white uppercase tracking-tighter"
+            >
+              Berita
+            </Link>
+            <Link
+              href="/kontak"
+              onClick={() => setIsOpen(false)}
+              className="text-3xl font-black text-blue-500 uppercase tracking-tighter"
+            >
+              Kontak
+            </Link>
+          </div>
         </div>
-      )}
+      </div>
     </nav>
   );
 }

@@ -1,130 +1,151 @@
 import Link from "next/link";
+import {
+  Zap,
+  TrendingUp,
+  ChevronRight,
+  Calendar,
+  Clock,
+  Newspaper,
+  Search,
+  ArrowUpRight,
+} from "lucide-react";
 
 export default function BeritaPage() {
-  // Mock Data untuk Trending (Biasanya berdasarkan view terbanyak)
   const trendingNews = [
-    { id: 1, title: "Cara Klaim JHT di Koperasi Adis", views: "1.2k" },
-    { id: 2, title: "Laporan RAT 2025 Sudah Terbit", views: "940" },
-    { id: 3, title: "Jadwal Bazar Sembako Murah", views: "850" },
+    {
+      id: 1,
+      title: "Prosedur Klaim JHT Kopkar Adis Terbaru 2026",
+      views: "1.2k",
+    },
+    {
+      id: 2,
+      title: "Laporan RAT 2025: Kenaikan Sisa Hasil Usaha",
+      views: "940",
+    },
+    {
+      id: 3,
+      title: "Ekspansi Unit Ritel: Pembukaan Adis Mart Cabang Ke-4",
+      views: "850",
+    },
   ];
 
-  // Mock Data Utama
   const allNews = [
     {
       id: 1,
-      title: "Rapat Anggota Tahunan (RAT) Tahun Buku 2025",
+      title:
+        "Rapat Anggota Tahunan (RAT) 2026: Fokus Digitalisasi & Transparansi",
       excerpt:
-        "Sesuai dengan AD/ART Koperasi, pengurus mengundang seluruh anggota...",
+        "Sesuai dengan AD/ART Koperasi, pengurus mengundang seluruh anggota untuk berpartisipasi dalam pengambilan keputusan strategis...",
       date: "15 April 2026",
       category: "PENGUMUMAN",
-      tagColor: "bg-red-600",
-      isHot: true,
+      tagColor: "text-red-500 bg-red-500/10",
+      readTime: "5 min",
     },
-    // ... (data lainnya bisa ditambah di sini)
+    // Data berita lainnya bisa di-loop di sini
   ];
 
   return (
-    <div className="bg-slate-50 min-h-screen">
-      {/* 1. HEADER KHUSUS BERITA */}
-      <section className="bg-white border-b border-gray-100 py-12">
-        <div className="max-w-7xl mx-auto px-6">
-          <h1 className="text-5xl font-black uppercase tracking-tighter italic text-slate-900">
-            Adis <span className="text-blue-600">Newsroom</span>
+    <div className="bg-white min-h-screen pb-32 overflow-hidden font-sans">
+      {/* HEADER: Sync with "The Core" Design */}
+      <section className="relative bg-slate-950 pt-32 pb-48 text-white overflow-hidden">
+        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/20 blur-[120px] rounded-full"></div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-[0.3em] mb-8">
+            <Newspaper className="w-4 h-4" /> Official Newsroom
+          </div>
+          <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter italic leading-none mb-4">
+            Adis{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 text-shadow-glow">
+              Insight
+            </span>
           </h1>
-          <p className="text-slate-500 mt-2 font-medium">
-            Informasi terkini seputar Koperasi Karyawan PT Adis.
+          <p className="text-slate-400 text-[10px] md:text-xs font-bold uppercase tracking-[0.5em] opacity-60">
+            Pusat Informasi & Update Strategis Kopkar ADIS
           </p>
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
-        {/* === KIRI: MAIN CONTENT (8 Kolom) === */}
-        <main className="lg:col-span-8">
-          {/* A. HOT NEWS / FEATURED */}
-          <div className="mb-16">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="flex h-3 w-3 rounded-full bg-red-600 animate-ping"></span>
-              <h2 className="font-black uppercase tracking-widest text-sm text-red-600">
-                Hot News Today
-              </h2>
+      {/* MAIN CONTENT GRID */}
+      <div className="max-w-7xl mx-auto px-6 -mt-24 relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-12">
+        {/* === LEFT: NEWS CONTENT === */}
+        <main className="lg:col-span-8 space-y-16">
+          {/* FEATURED / HOT NEWS */}
+          <div className="group relative bg-slate-900 rounded-[3rem] overflow-hidden shadow-2xl shadow-blue-900/20 border border-slate-800 aspect-video md:aspect-[21/9]">
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent z-10"></div>
+            <div className="absolute top-8 left-8 z-20 flex items-center gap-2 bg-red-600 text-white px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest animate-pulse">
+              <Zap className="w-3 h-3 fill-current" /> Hot News Today
             </div>
-            <div className="relative group overflow-hidden rounded-[2.5rem] bg-slate-900 aspect-video md:aspect-[21/9]">
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent z-10"></div>
-              <div className="absolute bottom-0 p-8 md:p-12 z-20">
-                <span className="bg-blue-600 text-white text-[10px] font-black px-4 py-1 rounded-full mb-4 inline-block uppercase">
-                  PENGUMUMAN
-                </span>
-                <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter leading-tight">
-                  Persiapan Menuju RAT (Rapat Anggota Tahunan) 2026:
-                  Transformasi Digital Koperasi
-                </h3>
-                <Link
-                  href="/berita/1"
-                  className="mt-6 inline-block text-white font-bold text-sm border-b-2 border-blue-500 pb-1 hover:text-blue-400 transition-all"
-                >
-                  BACA BERITA UTAMA →
-                </Link>
-              </div>
-              {/* Placeholder Image */}
-              <div className="absolute inset-0 flex items-center justify-center text-slate-700 font-black text-4xl opacity-20 italic">
-                FEATURED IMAGE
-              </div>
+            <div className="absolute bottom-0 p-8 md:p-12 z-20">
+              <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter leading-tight mb-6 group-hover:text-blue-400 transition-colors duration-500">
+                Transformasi Digital Kopkar ADIS: <br />
+                Menuju Ekosistem 4.0
+              </h3>
+              <Link
+                href="/berita/1"
+                className="inline-flex items-center gap-2 text-white font-black text-[10px] uppercase tracking-widest group-hover:gap-4 transition-all"
+              >
+                Read Featured Article <ArrowUpRight className="w-4 h-4" />
+              </Link>
+            </div>
+            {/* Mock Image Area */}
+            <div className="absolute inset-0 bg-slate-800 opacity-20 italic font-black text-6xl flex items-center justify-center -rotate-6">
+              FEATURED
             </div>
           </div>
 
-          {/* B. KATEGORI FILTER */}
-          <div className="flex flex-wrap gap-3 mb-10 border-y border-gray-200 py-4">
+          {/* CATEGORY FILTER (Premium Ghost Pill) */}
+          <div className="flex items-center gap-4 overflow-x-auto pb-4 no-scrollbar border-b border-slate-100">
             {[
-              "Semua",
-              "Pengumuman",
+              "All Post",
+              "Announcement",
               "Simpan Pinjam",
               "Event",
-              "Promo",
-              "Sosial",
+              "Internal",
             ].map((cat) => (
               <button
                 key={cat}
-                className="px-6 py-2 rounded-full border border-gray-200 text-xs font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all"
+                className="whitespace-nowrap px-6 py-2.5 rounded-full border border-slate-100 text-[10px] font-black uppercase tracking-widest hover:bg-slate-950 hover:text-white transition-all"
               >
                 {cat}
               </button>
             ))}
           </div>
 
-          {/* C. LATEST NEWS LIST */}
+          {/* LATEST NEWS LIST */}
           <div className="space-y-12">
             {allNews.map((news) => (
               <div
                 key={news.id}
-                className="flex flex-col md:flex-row gap-8 group"
+                className="group flex flex-col md:flex-row gap-8 items-center border-b border-slate-50 pb-12"
               >
-                <div className="w-full md:w-64 aspect-video bg-gray-200 rounded-3xl shrink-0 overflow-hidden relative">
-                  <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-[10px] font-bold uppercase tracking-widest">
-                    Image
-                  </div>
+                <div className="w-full md:w-72 aspect-video bg-slate-50 rounded-[2.5rem] overflow-hidden relative shrink-0">
+                  <div className="absolute inset-0 bg-slate-950/5 group-hover:bg-transparent transition-all"></div>
                 </div>
-                <div>
-                  <div className="flex items-center gap-3 mb-3">
+                <div className="flex-grow">
+                  <div className="flex items-center gap-4 mb-4">
                     <span
-                      className={`text-[10px] font-black px-3 py-0.5 rounded text-white ${news.tagColor}`}
+                      className={`text-[9px] font-black px-3 py-1 rounded-md uppercase tracking-widest ${news.tagColor}`}
                     >
                       {news.category}
                     </span>
-                    <span className="text-gray-400 text-[10px] font-bold">
-                      {news.date}
+                    <span className="text-slate-400 text-[9px] font-bold flex items-center gap-1">
+                      <Calendar className="w-3 h-3" /> {news.date}
                     </span>
                   </div>
-                  <h4 className="text-xl font-black uppercase tracking-tighter text-slate-900 group-hover:text-blue-600 transition-all mb-3 leading-tight">
+                  <h4 className="text-2xl font-black uppercase tracking-tighter text-slate-900 leading-tight mb-4 group-hover:text-blue-600 transition-colors">
                     {news.title}
                   </h4>
-                  <p className="text-slate-500 text-sm leading-relaxed mb-4 line-clamp-2">
-                    {news.excerpt}
+                  <p className="text-slate-500 text-sm leading-relaxed line-clamp-2 italic mb-6">
+                    &quot;{news.excerpt}&quot;
                   </p>
                   <Link
                     href={`/berita/${news.id}`}
-                    className="text-xs font-black text-blue-600 uppercase tracking-widest hover:underline"
+                    className="text-[10px] font-black text-blue-600 uppercase tracking-widest flex items-center gap-1 group/link"
                   >
-                    Selengkapnya
+                    Read Story{" "}
+                    <ChevronRight className="w-3 h-3 group-hover/link:translate-x-1 transition-transform" />
                   </Link>
                 </div>
               </div>
@@ -132,47 +153,55 @@ export default function BeritaPage() {
           </div>
         </main>
 
-        {/* === KANAN: SIDEBAR (4 Kolom) === */}
+        {/* === RIGHT: SIDEBAR === */}
         <aside className="lg:col-span-4 space-y-12">
-          {/* TRENDING SECTION */}
-          <div className="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm">
-            <h3 className="font-black uppercase tracking-tighter italic text-xl mb-6 border-b pb-4">
-              Trending 🔥
+          {/* SEARCH BOX */}
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Cari Berita..."
+              className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-4 text-xs font-bold uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+          </div>
+
+          {/* TRENDING SECTION (Premium Style) */}
+          <div className="bg-slate-50 p-8 rounded-[3rem] border border-slate-100 relative overflow-hidden">
+            <h3 className="font-black uppercase tracking-tighter text-xl mb-8 flex items-center gap-2 italic">
+              Trending <TrendingUp className="w-5 h-5 text-blue-600" />
             </h3>
-            <div className="space-y-6">
+            <div className="space-y-8">
               {trendingNews.map((item, index) => (
-                <div
-                  key={item.id}
-                  className="flex gap-4 items-start group cursor-pointer"
-                >
-                  <span className="text-4xl font-black text-slate-100 group-hover:text-blue-100 transition-all">
+                <div key={item.id} className="flex gap-4 group cursor-pointer">
+                  <span className="text-4xl font-black text-slate-200 group-hover:text-blue-500/20 transition-colors">
                     0{index + 1}
                   </span>
                   <div>
-                    <h5 className="font-bold text-sm text-slate-800 leading-tight group-hover:text-blue-600 mb-1">
+                    <h5 className="font-black text-sm text-slate-900 leading-tight group-hover:text-blue-600 transition-colors mb-2 uppercase tracking-tighter">
                       {item.title}
                     </h5>
-                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                      {item.views} Pembaca
-                    </span>
+                    <div className="flex items-center gap-2 text-slate-400 text-[9px] font-bold uppercase tracking-widest">
+                      <Clock className="w-3 h-3" /> {item.views} Readers
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* NEWSLETTER / INFO CARD */}
-          <div className="bg-blue-600 rounded-[2rem] p-8 text-white">
-            <h3 className="font-black uppercase tracking-tighter text-xl mb-4">
-              Butuh Bantuan?
+          {/* INFO BOX (Sync with Detail Page) */}
+          <div className="bg-slate-950 p-10 rounded-[3.5rem] text-white relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/20 blur-3xl rounded-full"></div>
+            <h3 className="relative z-10 font-black uppercase tracking-tighter text-2xl mb-4 italic">
+              Butuh <span className="text-blue-500">Bantuan?</span>
             </h3>
-            <p className="text-blue-100 text-xs leading-relaxed mb-6 font-medium">
-              Hubungi Sekretariat Koperasi jika ada pertanyaan seputar
-              keanggotaan atau layanan kami.
+            <p className="relative z-10 text-slate-400 text-xs leading-relaxed mb-8 font-medium">
+              Hubungi Sekretariat Koperasi jika ada pertanyaan seputar layanan
+              kami.
             </p>
             <Link
               href="/kontak"
-              className="block w-full text-center bg-white text-blue-600 font-black py-4 rounded-2xl text-xs uppercase tracking-[0.2em] hover:bg-slate-100"
+              className="relative z-10 block w-full text-center bg-blue-600 text-white font-black py-4 rounded-2xl text-[10px] uppercase tracking-widest hover:bg-blue-500 transition-colors shadow-lg shadow-blue-600/20"
             >
               Kontak Kami
             </Link>
