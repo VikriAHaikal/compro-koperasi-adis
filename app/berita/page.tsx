@@ -1,160 +1,184 @@
 import Link from "next/link";
 
 export default function BeritaPage() {
-  // Logic: Data dummy yang nantinya bisa diambil dari Database/CMS
+  // Mock Data untuk Trending (Biasanya berdasarkan view terbanyak)
+  const trendingNews = [
+    { id: 1, title: "Cara Klaim JHT di Koperasi Adis", views: "1.2k" },
+    { id: 2, title: "Laporan RAT 2025 Sudah Terbit", views: "940" },
+    { id: 3, title: "Jadwal Bazar Sembako Murah", views: "850" },
+  ];
+
+  // Mock Data Utama
   const allNews = [
     {
       id: 1,
       title: "Rapat Anggota Tahunan (RAT) Tahun Buku 2025",
       excerpt:
-        "Sesuai dengan AD/ART Koperasi, pengurus mengundang seluruh anggota untuk menghadiri RAT yang akan dilaksanakan...",
+        "Sesuai dengan AD/ART Koperasi, pengurus mengundang seluruh anggota...",
       date: "15 April 2026",
       category: "PENGUMUMAN",
       tagColor: "bg-red-600",
+      isHot: true,
     },
-    {
-      id: 2,
-      title: "Pembukaan Pendaftaran Beasiswa Anak Anggota",
-      excerpt:
-        "Kopkar ADIS kembali membuka program beasiswa prestasi untuk putra-putri anggota yang duduk di bangku SD, SMP, dan SMA...",
-      date: "10 April 2026",
-      category: "SOSIAL",
-      tagColor: "bg-green-600",
-    },
-    {
-      id: 3,
-      title: "Promo Spesial Ramadhan di Adis Mart",
-      excerpt:
-        "Dapatkan paket sembako murah dan diskon menarik lainnya selama bulan suci Ramadhan khusus untuk pemegang kartu anggota...",
-      date: "05 April 2026",
-      category: "PROMO",
-      tagColor: "bg-orange-500",
-    },
-    {
-      id: 4,
-      title: "Update Sistem SISKOP: Monitoring Tabungan Lebih Cepat",
-      excerpt:
-        "Tim IT Kopkar ADIS telah melakukan upgrade server pada aplikasi SISKOP. Kini akses data simpanan menjadi 2x lebih cepat...",
-      date: "01 April 2026",
-      category: "TEKNOLOGI",
-      tagColor: "bg-blue-600",
-    },
+    // ... (data lainnya bisa ditambah di sini)
   ];
 
   return (
-    <div className="bg-slate-50 min-h-screen pb-20">
-      {/* 1. HERO SECTION */}
-      <section className="bg-blue-900 py-20 text-white">
+    <div className="bg-slate-50 min-h-screen">
+      {/* 1. HEADER KHUSUS BERITA */}
+      <section className="bg-white border-b border-gray-100 py-12">
         <div className="max-w-7xl mx-auto px-6">
-          <span className="text-blue-400 font-black tracking-[0.3em] text-[10px] uppercase block mb-2">
-            Kopkar ADIS Update
-          </span>
-          <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter italic">
-            Berita & Pengumuman
+          <h1 className="text-5xl font-black uppercase tracking-tighter italic text-slate-900">
+            Adis <span className="text-blue-600">Newsroom</span>
           </h1>
+          <p className="text-slate-500 mt-2 font-medium">
+            Informasi terkini seputar Koperasi Karyawan PT Adis.
+          </p>
         </div>
       </section>
 
-      {/* 2. FEATURED NEWS (Berita Utama) */}
-      <section className="max-w-7xl mx-auto px-6 -mt-10">
-        <div className="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-gray-100 grid grid-cols-1 lg:grid-cols-2">
-          <div className="bg-gray-200 aspect-video lg:aspect-auto relative animate-pulse">
-            {/* Placeholder Image */}
-            <div className="absolute inset-0 flex items-center justify-center text-gray-400 font-bold uppercase tracking-widest italic">
-              Featured Image
+      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
+        {/* === KIRI: MAIN CONTENT (8 Kolom) === */}
+        <main className="lg:col-span-8">
+          {/* A. HOT NEWS / FEATURED */}
+          <div className="mb-16">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="flex h-3 w-3 rounded-full bg-red-600 animate-ping"></span>
+              <h2 className="font-black uppercase tracking-widest text-sm text-red-600">
+                Hot News Today
+              </h2>
+            </div>
+            <div className="relative group overflow-hidden rounded-[2.5rem] bg-slate-900 aspect-video md:aspect-[21/9]">
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent z-10"></div>
+              <div className="absolute bottom-0 p-8 md:p-12 z-20">
+                <span className="bg-blue-600 text-white text-[10px] font-black px-4 py-1 rounded-full mb-4 inline-block uppercase">
+                  PENGUMUMAN
+                </span>
+                <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter leading-tight">
+                  Persiapan Menuju RAT (Rapat Anggota Tahunan) 2026:
+                  Transformasi Digital Koperasi
+                </h3>
+                <Link
+                  href="/berita/1"
+                  className="mt-6 inline-block text-white font-bold text-sm border-b-2 border-blue-500 pb-1 hover:text-blue-400 transition-all"
+                >
+                  BACA BERITA UTAMA →
+                </Link>
+              </div>
+              {/* Placeholder Image */}
+              <div className="absolute inset-0 flex items-center justify-center text-slate-700 font-black text-4xl opacity-20 italic">
+                FEATURED IMAGE
+              </div>
             </div>
           </div>
-          <div className="p-10 md:p-16 flex flex-col justify-center">
-            <span className="bg-red-600 text-white text-[10px] font-black px-4 py-1 rounded-full w-fit mb-6 uppercase tracking-widest">
-              Terbaru
-            </span>
-            <h2 className="text-3xl font-black text-gray-900 mb-6 leading-tight uppercase tracking-tighter">
-              Persiapan Menuju RAT (Rapat Anggota Tahunan) 2026
-            </h2>
-            <p className="text-gray-500 leading-relaxed mb-8">
-              Pengurus sedang mematangkan laporan pertanggungjawaban untuk
-              disampaikan kepada seluruh anggota. RAT tahun ini akan mengusung
-              tema &quot;Transformasi Digital Menuju Koperasi Mandiri&quot;.
-            </p>
-            <button className="bg-blue-600 text-white font-bold px-8 py-3 rounded-full w-fit hover:bg-blue-700 transition-all text-sm uppercase tracking-widest">
-              Baca Selengkapnya
-            </button>
+
+          {/* B. KATEGORI FILTER */}
+          <div className="flex flex-wrap gap-3 mb-10 border-y border-gray-200 py-4">
+            {[
+              "Semua",
+              "Pengumuman",
+              "Simpan Pinjam",
+              "Event",
+              "Promo",
+              "Sosial",
+            ].map((cat) => (
+              <button
+                key={cat}
+                className="px-6 py-2 rounded-full border border-gray-200 text-xs font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all"
+              >
+                {cat}
+              </button>
+            ))}
           </div>
-        </div>
-      </section>
 
-      {/* 3. NEWS GRID (Daftar Berita Lainnya) */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="flex items-center justify-between mb-12 border-b border-gray-200 pb-6">
-          <h3 className="font-black text-2xl uppercase tracking-tighter text-gray-900 italic">
-            Arsip Berita
-          </h3>
-          <div className="flex gap-4 text-xs font-bold text-gray-400">
-            <button className="text-blue-600 border-b-2 border-blue-600">
-              Semua
-            </button>
-            <button className="hover:text-gray-600">Pengumuman</button>
-            <button className="hover:text-gray-600">Event</button>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {allNews.map((news) => (
-            <div
-              key={news.id}
-              className="group bg-white rounded-[2rem] border border-gray-100 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col"
-            >
-              {/* Image Placeholder */}
-              <div className="aspect-[16/9] bg-gray-100 relative group-hover:scale-105 transition-transform duration-500">
-                <div className="absolute top-4 left-4 z-10">
-                  <span
-                    className={`${news.tagColor} text-white text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg`}
-                  >
-                    {news.category}
-                  </span>
+          {/* C. LATEST NEWS LIST */}
+          <div className="space-y-12">
+            {allNews.map((news) => (
+              <div
+                key={news.id}
+                className="flex flex-col md:flex-row gap-8 group"
+              >
+                <div className="w-full md:w-64 aspect-video bg-gray-200 rounded-3xl shrink-0 overflow-hidden relative">
+                  <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-[10px] font-bold uppercase tracking-widest">
+                    Image
+                  </div>
                 </div>
-                <div className="absolute inset-0 flex items-center justify-center text-gray-200 font-bold text-[10px] uppercase tracking-[0.2em]">
-                  News Image
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-8 flex flex-col flex-grow">
-                <span className="text-gray-400 text-[10px] font-bold uppercase tracking-widest mb-3">
-                  {news.date}
-                </span>
-                <h4 className="text-lg font-black text-gray-900 mb-4 leading-tight group-hover:text-blue-600 transition-colors uppercase">
-                  {news.title}
-                </h4>
-                <p className="text-gray-500 text-sm leading-relaxed mb-6 line-clamp-3">
-                  {news.excerpt}
-                </p>
-                <div className="mt-auto pt-4 border-t border-gray-50">
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span
+                      className={`text-[10px] font-black px-3 py-0.5 rounded text-white ${news.tagColor}`}
+                    >
+                      {news.category}
+                    </span>
+                    <span className="text-gray-400 text-[10px] font-bold">
+                      {news.date}
+                    </span>
+                  </div>
+                  <h4 className="text-xl font-black uppercase tracking-tighter text-slate-900 group-hover:text-blue-600 transition-all mb-3 leading-tight">
+                    {news.title}
+                  </h4>
+                  <p className="text-slate-500 text-sm leading-relaxed mb-4 line-clamp-2">
+                    {news.excerpt}
+                  </p>
                   <Link
                     href={`/berita/${news.id}`}
-                    className="text-blue-600 text-[10px] font-black uppercase tracking-[0.2em] hover:opacity-70"
+                    className="text-xs font-black text-blue-600 uppercase tracking-widest hover:underline"
                   >
-                    Baca Berita →
+                    Selengkapnya
                   </Link>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </main>
 
-        {/* 4. PAGINATION LOGIC (DUMMY) */}
-        <div className="mt-20 flex justify-center gap-2">
-          <button className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold text-sm shadow-lg shadow-blue-200">
-            1
-          </button>
-          <button className="w-10 h-10 rounded-full bg-white text-gray-400 font-bold text-sm border border-gray-100 hover:bg-gray-50">
-            2
-          </button>
-          <button className="w-10 h-10 rounded-full bg-white text-gray-400 font-bold text-sm border border-gray-100 hover:bg-gray-50">
-            3
-          </button>
-        </div>
-      </section>
+        {/* === KANAN: SIDEBAR (4 Kolom) === */}
+        <aside className="lg:col-span-4 space-y-12">
+          {/* TRENDING SECTION */}
+          <div className="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm">
+            <h3 className="font-black uppercase tracking-tighter italic text-xl mb-6 border-b pb-4">
+              Trending 🔥
+            </h3>
+            <div className="space-y-6">
+              {trendingNews.map((item, index) => (
+                <div
+                  key={item.id}
+                  className="flex gap-4 items-start group cursor-pointer"
+                >
+                  <span className="text-4xl font-black text-slate-100 group-hover:text-blue-100 transition-all">
+                    0{index + 1}
+                  </span>
+                  <div>
+                    <h5 className="font-bold text-sm text-slate-800 leading-tight group-hover:text-blue-600 mb-1">
+                      {item.title}
+                    </h5>
+                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                      {item.views} Pembaca
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* NEWSLETTER / INFO CARD */}
+          <div className="bg-blue-600 rounded-[2rem] p-8 text-white">
+            <h3 className="font-black uppercase tracking-tighter text-xl mb-4">
+              Butuh Bantuan?
+            </h3>
+            <p className="text-blue-100 text-xs leading-relaxed mb-6 font-medium">
+              Hubungi Sekretariat Koperasi jika ada pertanyaan seputar
+              keanggotaan atau layanan kami.
+            </p>
+            <Link
+              href="/kontak"
+              className="block w-full text-center bg-white text-blue-600 font-black py-4 rounded-2xl text-xs uppercase tracking-[0.2em] hover:bg-slate-100"
+            >
+              Kontak Kami
+            </Link>
+          </div>
+        </aside>
+      </div>
     </div>
   );
 }
