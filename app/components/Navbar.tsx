@@ -61,7 +61,7 @@ export default function Navbar() {
           </ul>
         </li>
 
-        {/* LAYANAN DROPDOWN (FULL VERSION) */}
+        {/* LAYANAN DROPDOWN */}
         <li className="relative group py-2">
           <button className="hover:text-blue-200 transition flex items-center gap-1 uppercase">
             LAYANAN <span className="text-[10px]">▼</span>
@@ -114,7 +114,6 @@ export default function Navbar() {
                 >
                   <span className="text-base">🏦</span> Pinjaman Regular
                 </Link>
-                {/* FIX: Link sudah disesuaikan dengan nama folder kamu */}
                 <Link
                   href="/layanan/simpan-pinjam/pinjaman-multi-guna"
                   className="flex items-center gap-3 px-8 py-2.5 hover:bg-blue-50 hover:text-blue-600 transition text-[13px] font-medium"
@@ -123,9 +122,9 @@ export default function Navbar() {
                 </Link>
               </li>
 
-              {/* --- SECTION 3: PELATIHAN (NEW!) --- */}
+              {/* --- SECTION 3: PELATIHAN (FIXED LINK) --- */}
               <li className="bg-gray-50 border-b border-gray-100 px-6 py-3">
-                <Link href="/layanan/pelatihan" className="group/item">
+                <Link href="/layanan/pelatihan-koperasi" className="group/item">
                   <p className="text-blue-600 font-black text-[10px] uppercase tracking-[0.2em] group-hover/item:text-blue-800">
                     Pelatihan Koperasi
                   </p>
@@ -133,13 +132,13 @@ export default function Navbar() {
               </li>
               <li className="bg-white">
                 <Link
-                  href="/layanan/pelatihan/pendidikan-keterampilan"
+                  href="/layanan/pelatihan-koperasi/pendidikan-keterampilan"
                   className="flex items-center gap-3 px-8 py-2.5 hover:bg-blue-50 hover:text-blue-600 transition text-[13px] font-medium"
                 >
                   <span className="text-base">🛠️</span> Pendidikan Keterampilan
                 </Link>
                 <Link
-                  href="/layanan/pelatihan/pendidikan-dasar"
+                  href="/layanan/pelatihan-koperasi/pendidikan-dasar-anggota"
                   className="flex items-center gap-3 px-8 py-2.5 hover:bg-blue-50 hover:text-blue-600 transition text-[13px] font-medium"
                 >
                   <span className="text-base">📜</span> Pendidikan Dasar Anggota
