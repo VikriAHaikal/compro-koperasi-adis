@@ -14,7 +14,6 @@ import {
   Clock,
   ArrowUpRight,
   Trophy,
-  Sparkles,
   Crown,
 } from "lucide-react";
 
@@ -46,32 +45,33 @@ const achievementData = [
   },
 ];
 
-// --- 2. DATA BERITA (SINKRON DENGAN NEWSROOM) ---
+// --- 2. DATA BERITA (SINKRON 100% DENGAN NEWSROOM & SLUG SYSTEM) ---
 const newsData = [
   {
-    id: 1,
-    category: "PENGUMUMAN",
-    title: "RAT 2026: Era Baru Digitalisasi Kopkar ADIS",
+    slug: "transformasi-digital-kopkar-adis-menuju-ekosistem-4-0",
+    category: "Pengumuman",
+    title:
+      "Rapat Anggota Tahunan (RAT) 2026: Fokus Digitalisasi & Transparansi",
     date: "15 April 2026",
     readTime: "5 min read",
   },
   {
-    id: 2,
-    category: "EVENT",
-    title: "Bazar Ramadhan 2026: Sinergi Koperasi dan Anggota",
+    slug: "pelatihan-wirausaha-produk-bernilai-tambah",
+    category: "Info Internal",
+    title: "Pelatihan Wirausaha: Membuat Produk Bernilai Tambah",
     date: "12 April 2026",
     readTime: "4 min read",
   },
   {
-    id: 3,
-    category: "INTERNAL",
-    title: "Peningkatan Plafon Dana Talangan Anggota Baru",
-    date: "05 April 2026",
+    slug: "prosedur-klaim-jht-kopkar-adis-2026",
+    category: "Info Internal",
+    title: "Prosedur Klaim JHT Kopkar Adis Terbaru 2026",
+    date: "10 April 2026",
     readTime: "3 min read",
   },
 ];
 
-// --- 3. KOMPONEN ICON (FIX ESLINT ANY) ---
+// --- 3. KOMPONEN ICON ---
 function LayoutGrid(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -265,7 +265,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5. NEWS SECTION (SINKRON DENGAN NEWSROOM) */}
+      {/* 5. NEWS SECTION (SINKRON DENGAN SLUG SYSTEM) */}
       <section className="py-32 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row items-end justify-between mb-20 gap-8">
@@ -286,8 +286,12 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {newsData.map((news) => (
-              <div key={news.id} className="group cursor-pointer">
+            {newsData.map((news, idx) => (
+              <Link
+                href={`/berita/${news.slug}`}
+                key={idx}
+                className="group cursor-pointer"
+              >
                 <div className="aspect-video bg-slate-950 rounded-[2.5rem] overflow-hidden mb-8 relative shadow-lg group-hover:shadow-2xl transition-all duration-500 border border-slate-800">
                   <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
                   <div className="absolute top-6 left-6 px-4 py-1.5 bg-blue-600 text-white text-[9px] font-black uppercase tracking-widest rounded-full">
@@ -297,26 +301,27 @@ export default function Home() {
                     <ArrowUpRight className="w-8 h-8 text-white/20 group-hover:text-white group-hover:scale-125 transition-all" />
                   </div>
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-4 text-left">
                   <div className="flex items-center gap-4 text-slate-400 text-[9px] font-bold uppercase tracking-widest">
                     <span className="flex items-center gap-1">
-                      <Calendar className="w-3 h-3" /> {news.date}
+                      <Calendar className="w-3 h-3 text-blue-500" /> {news.date}
                     </span>
                     <span className="flex items-center gap-1">
-                      <Clock className="w-3 h-3" /> {news.readTime}
+                      <Clock className="w-3 h-3 text-blue-500" />{" "}
+                      {news.readTime}
                     </span>
                   </div>
                   <h4 className="text-xl font-black text-slate-900 uppercase leading-tight group-hover:text-blue-600 transition-colors">
                     {news.title}
                   </h4>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 6. ACHIEVEMENT SECTION (MENGGUNAKAN DESIGN GALLERY CARD - TANPA BINTANG) */}
+      {/* 6. ACHIEVEMENT SECTION */}
       <section className="py-32 bg-slate-50 border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between mb-20 gap-8">
@@ -342,7 +347,6 @@ export default function Home() {
                 key={index}
                 className="group bg-white rounded-[2rem] overflow-hidden border border-slate-100 shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:shadow-xl transition-all duration-500"
               >
-                {/* Photo Placeholder Style (Sync with Prestasi Page) */}
                 <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 group-hover:bg-slate-50 transition-colors">
                     <Trophy className="w-12 h-12 mb-2 opacity-20" />
@@ -354,19 +358,10 @@ export default function Home() {
                     {item.year}
                   </div>
                 </div>
-
-                {/* Info Area */}
-                <div className="p-6">
+                <div className="p-6 text-left">
                   <div className="flex items-center gap-2 mb-3">
                     <span
-                      className={`px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest border 
-                      ${
-                        item.level === "Nasional"
-                          ? "bg-blue-50 text-blue-600 border-blue-100"
-                          : item.level === "Provinsi"
-                            ? "bg-indigo-50 text-indigo-600 border-indigo-100"
-                            : "bg-slate-50 text-slate-600 border-slate-200"
-                      }`}
+                      className={`px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest border ${item.level === "Nasional" ? "bg-blue-50 text-blue-600 border-blue-100" : item.level === "Provinsi" ? "bg-indigo-50 text-indigo-600 border-indigo-100" : "bg-slate-50 text-slate-600 border-slate-200"}`}
                     >
                       {item.level}
                     </span>
@@ -408,10 +403,7 @@ export default function Home() {
 
       <style
         dangerouslySetInnerHTML={{
-          __html: `
-        @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
-        .animate-marquee { animation: marquee 40s linear infinite; }
-      `,
+          __html: `@keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } } .animate-marquee { animation: marquee 40s linear infinite; }`,
         }}
       />
     </div>
