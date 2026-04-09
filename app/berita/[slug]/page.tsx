@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import {
   Calendar,
@@ -9,6 +10,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 
+// 1. DATA PUSAT (Tetap di sini sementara sebelum ke Database/Supabase)
 const ALL_NEWS_DATA = [
   {
     slug: "transformasi-digital-kopkar-adis-menuju-ekosistem-4-0",
@@ -63,19 +65,46 @@ const ALL_NEWS_DATA = [
   },
 ];
 
-// PERUBAHAN DISINI: Tambahkan async dan Promise pada tipe data params
+// 2. FUNGSI GENERATE METADATA (Dinamis sesuai slug)
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const news = ALL_NEWS_DATA.find((item) => item.slug === slug);
+
+  if (!news) {
+    return {
+      title: "Berita Tidak Ditemukan",
+    };
+  }
+
+  return {
+    title: news.title,
+    description: news.content.substring(0, 160), // Ambil sedikit konten untuk deskripsi link
+    openGraph: {
+      title: news.title,
+      description: news.content.substring(0, 160),
+      type: "article",
+      publishedTime: news.date,
+    },
+  };
+}
+
+// 3. KOMPONEN HALAMAN UTAMA
 export default async function DetailBeritaPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  // Await params untuk mendapatkan slug-nya (Standar Next.js 15)
+  // Await params sesuai standar Next.js 15
   const { slug } = await params;
 
-  // Sekarang slug sudah ada isinya, baru cari datanya
+  // Cari data berita
   const news = ALL_NEWS_DATA.find((item) => item.slug === slug);
 
-  // Filter trending list agar tidak menampilkan berita yang sedang dibaca
+  // Filter trending list (buang berita yang lagi dibuka)
   const trendingList = ALL_NEWS_DATA.filter((item) => item.slug !== slug).slice(
     0,
     3,
@@ -101,6 +130,7 @@ export default async function DetailBeritaPage({
 
   return (
     <div className="bg-white min-h-screen pb-32 font-sans text-left">
+      {/* HEADER NAVIGATION */}
       <div className="bg-slate-950 pt-28 pb-10">
         <div className="max-w-4xl mx-auto px-6">
           <Link
@@ -114,6 +144,7 @@ export default async function DetailBeritaPage({
       </div>
 
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-16 mt-12">
+        {/* === LEFT: ARTICLE CONTENT === */}
         <article className="lg:col-span-8">
           <div className="flex flex-wrap items-center gap-6 mb-8">
             <span className="bg-blue-600 text-white text-[9px] font-black px-4 py-1.5 rounded-lg uppercase tracking-widest shadow-lg shadow-blue-600/20">
@@ -143,6 +174,7 @@ export default async function DetailBeritaPage({
             {news.content}
           </div>
 
+          {/* Published By Area */}
           <div className="mt-20 pt-10 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-slate-900 rounded-full flex items-center justify-center text-white font-black text-xs">
@@ -168,6 +200,7 @@ export default async function DetailBeritaPage({
           </div>
         </article>
 
+        {/* === RIGHT: DYNAMIC SIDEBAR === */}
         <aside className="lg:col-span-4 space-y-12 text-left">
           <div className="bg-slate-950 p-10 rounded-[3.5rem] text-white relative overflow-hidden shadow-2xl">
             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-3xl"></div>
